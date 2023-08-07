@@ -1,0 +1,129 @@
+final win
+from PyQt5.QtCore import Qt, QTime, QTimer
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QPushButton
+from instr import *
+
+class MainWin(QWidget):
+    def __init__(self, exp):
+        super().__init__()
+        self.exp = exp
+        self.initUI()
+        self.set_appear()
+        self.show()
+    def results (self):
+        if self.exp.age < 7:
+            self.index = 0 
+            return 'немає даних для такого віку'
+        self.index = (4 * (int(self.exp.t1) + int(self.exp.t2) + int(self.exp.t3)) - 200) / 10
+        if self.exp.age == 7 or self.exp.age == 8:
+            if self.index >= 21:
+                return txt_rest1
+            elif self.index < 21 and self.index >= 17:
+                return txt_rest2
+            elif self.index < 17 and self.index >= 12:
+                return txt_rest3
+            elif self.index < 12 and self.index >= 6.5:
+                return txt_rest4
+            else:
+                return txt_rest5
+        if self.exp.age == 9 or self.exp.age == 10:
+            if self.index >= 19.5:
+                return txt_rest1
+            elif self.index < 19.5 and self.index >= 15.5:
+                return txt_rest2
+            elif self.index < 15.5 and self.index >= 10.5:
+                return txt_rest3
+            elif self.index < 10.5 and self.index >= 5:
+                return txt_rest4
+            else:
+                return txt_rest5
+        if self.exp.age == 11 or self.exp.age == 12:
+            if self.index >= 18:
+                return txt_rest1
+            elif self.index < 18 and self.index >= 14:
+                return txt_rest2
+            elif self.index < 14 and self.index >= 9:
+                return txt_rest3
+            elif self.index < 9 and self.index >= 3.5:
+                return txt_rest4
+            else:
+                return txt_rest5
+        if self.exp.age == 13 or self.exp.age == 14:
+            if self.index >= 16.5:
+                return txt_rest1
+            elif self.index < 16.5 and self.index >= 12.5:
+                return txt_rest2
+            elif self.index < 12.5 and self.index >= 7.5:
+                return txt_rest3
+            elif self.index < 7.5 and self.index >= 2:
+                return txt_rest4
+            else:
+                return txt_rest5
+        if self.exp.age == 15:
+            if self.index >= 15:
+                return txt_rest1
+            elif self.index < 15 and self.index >= 11:
+                return txt_rest2
+            elif self.index < 11 and self.index >= 6:
+                return txt_rest3
+            elif self.index < 6 and self.index >= 0.5:
+                return txt_rest4
+            else:
+                return txt_rest5
+                
+    def initUI(self):
+        self.work_text = QLabel(txt_workheart + self.results())
+        self.index_text = QLabel(txt_index + str(self.index))
+        self.layout_line = QVBoxLayout()
+        self.layout_line.addWidget(self.index_text, alignment=Qt.AlignCenter)
+        self.layout_line.addWidget(self.work_text, alignment=Qt.AlignCenter)
+        self.setLayout(self.layout_line)
+
+    def set_appear(self):
+        self.setWindowTitle(txt_finalwin)
+        self.resize(win_width, win_height)
+        self.move(win_x, win_y)
+
+
+
+
+
+instr py
+win_x, win_y = 200, 100
+win_width, win_height = 1000, 600
+
+txt_hello = "Ласкаво просимо до програми визначення стану здоров'я!" 
+txt_next = 'Почати'
+txt_instruction = ( "Ця програма дозволить вам за допомогою тесту Руфʼє провести первинну діагностику вашого здоровʼя. \n"
+                    "Проба Руфʼє є навантажувальним комплексом, призначеним для оцінки працездатності серця при фізичному навантаженні. \n"
+                    " випробуваного, що знаходиться в положенні лежачи на спині протягом 5 хв, визначають частоту пульсу за 15 секунд; \n"
+                    "потім протягом 45 секунд випробуваний виконує 30 присідань. \n"
+                    "Після закінчення навантаження випробуваний лягає, в нього знову підраховується кількість пульсацій за перші 15 секунд, \n"
+                    " потім - за останні 15 секунд першої хвилини періоду відновлення. \n"
+                    "Важливо! якщо в процесі проведення випробування ви відчуєте себе погано (зʼявиться запаморочення, шум\n"
+                    "вухах, сильна задишка та ін.), то тест необхідно перервати і звернутися до лікаря.")
+txt_title = "Здоров'«"
+txt_name = 'Введіть П.І.Б.
+txt_hintname = "П.І.Б.
+txt hintage = "0"'
+txt_test1 = 'Ляжте на спину заміряйте пульс за 15 секунд. натисніть кнопку "почати перший тест", щоб запустити таймер.\n Результат запишіть відповідне поле. 
+txt test2 = 'Виконайте 30 присідань за 45 секунд. Для цього натисніть кнопку "Почати робити присідання", щоб запустити лічильник присідань.'
+txt_test3 = 'Ляжте на спину заміряйте пульс спочатку за перші 15 секунд хвилини, потім за останні 15 секунд. Результати запишіть відповідні поля.'
+txt_sendresults = "Надіслати результати"
+txt hinttest1 = '0'
+txt_hinttest2 = '0'
+txt_hinttest3 = '0'
+txt_starttest1 = "Почати перший тест"
+txt_starttest2 = "Почати робити присідання"
+txt_starttest3 = 'Почати фінальний тест'
+txt_timer = time.toString("hh:mm:ss")
+txt_age = 'Повних років: "
+txt_finalwin = 'Результати"
+txt_index = "Індекс Руф'є:"
+txt_workheart = "Працездатність серця:"
+txt_rest1 = 'низька. Терміново зверніться до лікаря!'
+txt_rest2 = 'задовільна. Зверніться до лікаря!'
+txt_rest3 = 'середня. Можливо, варто додатково обстежитись у лікаря.'
+txt_rest4 = 'вище середнього'
+txt_rest5 = "висока"
